@@ -23,7 +23,8 @@ https://facebook.github.io/flux/docs/todo-list.html
 また、本家では js/ にソースとなるJSコードを含めているが、
 これは個人的に分かりづらいと思ったので src/ とした。
 Web-Starter-Kitのコードも一部参考にしているが、
-学習量的に厳しいのでせいぜい gulp serve 等を真似した程度。
+全要素の理解は学習時間的にはかなり厳しかったので、
+せいぜい gulp serve 等を真似した程度。
 
 https://github.com/google/web-starter-kit/
 
