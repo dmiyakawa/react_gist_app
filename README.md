@@ -71,6 +71,10 @@ https://facebook.github.io/react/blog/2015/12/16/ismounted-antipattern.html
 Fluxを使用した場合、isMounted()のようなチェックは必要がない。
 Store層からReactを使用する際にisMounted()でなければそもそもMountしないのであって、
 Reactの中でそういう分岐を書く必要がない。
+Reactの仮想DOM生成を純粋関数っぽく見ようとすると、
+isMounted()はAPIとしてそもそも含まれているべきでない。
+依存するべきはStoreからの「引数」であって、
+React層の実装で自身の内部状態に基づいた分岐をしてはならないのだと思う。
 
 後者の記事に基づいてPromiseをキャンセル可能とするmakeCancelableを使っているんだが、
 Flux流儀ならこれは無用の長物だろうと思う。
