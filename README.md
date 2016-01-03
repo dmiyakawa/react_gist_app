@@ -12,6 +12,8 @@ Reactを全面的に使っているのだからDOM操作は必要が無い。
 
 # 参考
 
+Qiitaに書いた: http://qiita.com/amedama/items/e364c164c35742116148
+
 https://facebook.github.io/flux/ の例として挙げられている
 https://facebook.github.io/flux/docs/todo-list.html
 を参考にした。
