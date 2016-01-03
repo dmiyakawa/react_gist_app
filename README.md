@@ -1,6 +1,6 @@
 # これは何？
 
-React (+ Flux) + ES6 + Browserify + Gulp + Ajax (jQuery) なアプリ例。
+React (+ Flux) + ES6 (というかBabel) + Browserify + Gulp + Ajax (jQuery) なアプリ例。
 https://api.github.com/users/dmiyakawa/gists
 の1件目のエントリを非同期で取得してHTMLに書き込む。
 
