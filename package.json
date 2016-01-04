@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository" : { "type" : "git",
+      "url" : "https://github.com/dmiyakawa/react_gist_app.git"
+  },
   "dependencies": {
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
