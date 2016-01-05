@@ -12,8 +12,8 @@ var gutil = require('gulp-util');
 const reload = browserSync.reload;
 const $ = gulpLoadPlugins();
 
-const sources = ['src/**/*.js', 'src/app.js']
-const outfile = 'bundle.js'
+const sources = ['src/main.js']
+const module_name = 'Main'
 
 // https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-with-globs.md
 gulp.task('scripts', function (callback) {
@@ -30,10 +30,12 @@ gulp.task('scripts', function (callback) {
     }))
     // turns the output bundle stream into a stream containing
     // the normal attributes gulp plugins expect.
-    .pipe(source(outfile))
+    .pipe(source('bundle.js'))
     // the rest of the gulp task, as you would normally write it.
     // here we're copying from the Browserify + Uglify2 recipe.
     .pipe(buffer())
+    .pipe(gulp.dest('./dist'))
+    .pipe($.rename('bundle.min.js'))
     .pipe($.sourcemaps.init({loadMaps: true}))
       // Add gulp plugins to the pipeline here.
       .pipe($.uglify())
@@ -49,33 +51,22 @@ gulp.task('scripts', function (callback) {
       // callback();
     })
 
-  // "globby" replaces the normal "gulp.src" as Browserify
-  // creates it's own readable stream.
-  globby(sources).then(function(entries) {
-    console.log("globby start (" + entries + ")");
-
-    // create the Browserify instance.
-    // "debug: true" means "apply source maps"
-    var b = browserify({
-      debug: true,
-      entries: entries
+  // create the Browserify instance.
+  // "debug: true" means "apply source maps"
+  var b = browserify({
+    debug: true,
+    entries: sources,
+    standalone: module_name
     });
 
-    // pipe the Browserify stream into the stream we created earlier
-    // this starts our gulp pipeline.
-    //
-    // b.bundle(cb)
-    // Bundle the files and their dependencies into a
-    // single javascript file.
-    // See: https://github.com/substack/node-browserify
-    b.transform('babelify').bundle().pipe(bundledStream);
-
-    console.log("globby ended");
-  }).catch(function(err) {
-    console.log("Error during globby()");
-    // ensure any errors from globby are handled
-    bundledStream.emit('error', err);
-  });
+  // pipe the Browserify stream into the stream we created earlier
+  // this starts our gulp pipeline.
+  //
+  // b.bundle(cb)
+  // Bundle the files and their dependencies into a
+  // single javascript file.
+  // See: https://github.com/substack/node-browserify
+  b.transform('babelify').bundle().pipe(bundledStream);
 
   // finally, we return the stream, so gulp knows when this task is done.
   return bundledStream;
@@ -92,6 +83,9 @@ gulp.task('serve', function() {
       baseDir: "./"
     }
   });
+});
+
+gulp.task('watch', function() {
   gulp.watch(['*.html'], ['reload']);
   gulp.watch(sources, ['scripts', 'reload']);
 });
@@ -103,5 +97,8 @@ gulp.task('lint', function() {
     .pipe($.if(!browserSync.active, $.eslint.failOnError()))
 });
 
-gulp.task('default', ['scripts'])
+gulp.task('build', ['scripts']);
+gulp.task('default', ['build'], function() {
+  return gulp.start('serve', 'watch');
+})
 

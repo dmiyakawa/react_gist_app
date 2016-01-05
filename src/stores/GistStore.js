@@ -1,7 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import GistActions from '../actions/GistActions'
 import GistConstants from '../constants/GistConstants';
-import makeCancelable from '../utils/makeCancelable'
 
 import $ from 'jquery'
 
@@ -36,12 +35,8 @@ class GistStore extends EventEmitter {
     this.url = url;
     this.result = null;
 
-    let promise = $.get(url);
-    this.loader = makeCancelable(promise);
-    this.loader.promise.then((result) => {
+    $.get(url).then((result) => {
       GistActions.finishLoading(result);
-    }).catch((reason) => {
-      console.log(`isCanceled(${reason})`)
     });
     this.emit(CHANGE_EVENT);
   }

@@ -2,7 +2,6 @@
 
 import React from 'react'
 import $ from 'jquery'
-import makeCancelable from '../utils/makeCancelable'
 import GistStore from '../stores/GistStore'
 import GistActions from '../actions/GistActions'
 
