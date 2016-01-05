@@ -3,9 +3,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 class Main {
-  run() {
+  run(gist_url) {
+    console.log("Main.run()");
     ReactDOM.render(
-      <GistApp source="https://api.github.com/users/dmiyakawa/gists" />,
+      <GistApp source={gist_url} />,
       document.getElementById('gistapp')
     );
   }
